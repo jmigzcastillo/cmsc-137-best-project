@@ -1,3 +1,5 @@
+package chatmodule;
+
 import java.io.*;
 import java.net.*;
 
@@ -24,11 +26,10 @@ public class Client implements Runnable {
 		}
 	}
 
-	public static void main(String[] args) {
+	public Client(String host, String port) {
 
 		try {
-			String host = args[0];
-			int portNumber = Integer.valueOf(args[1]).intValue();
+			int portNumber = Integer.valueOf(port).intValue();
 
 			clientSocket = new Socket(host, portNumber);
 			inputLine = new BufferedReader(new InputStreamReader(System.in));
@@ -58,4 +59,5 @@ public class Client implements Runnable {
 			}
 		}
 	}
+
 }
