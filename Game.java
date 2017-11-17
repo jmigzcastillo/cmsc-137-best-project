@@ -40,8 +40,25 @@ class Game{
 		setInput1Panel();
 		setInput2Panel();
 
+
+
 		launchGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		mainPanel.add(launchGameButton);
+
+		clientRadioButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				hostIPField.setEditable(true);
+			}
+		});
+
+		serverRadioButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e){
+				hostIPField.setEditable(false);
+			}
+		});
+
 
 		launchGameButton.addActionListener(new ActionListener() {
             @Override
@@ -51,6 +68,7 @@ class Game{
 					userConfig.userType = "Server";
 				} else {
 					userConfig.userType = "Client";
+
 				}
 				userConfig.hostIP = hostIPField.getText();
 				userConfig.portNumber = portNoField.getText();
