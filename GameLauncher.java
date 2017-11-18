@@ -31,14 +31,15 @@ class GameLauncher extends Window{
 
 	public JButton launchGameButton = new JButton("LAUNCH GAME");
 
-	private final int FRAME_WIDTH = 270;
-	private final int FRAME_HEIGHT = 220;
+	private final int FRAME_WIDTH = 800;
+	private final int FRAME_HEIGHT = 600;
 
+	// private Window lobbyWindow;
 
-	private Window lobbyWindow;
+	private Config userConfig = new Config();
 
 	public GameLauncher() {
-		super(270, 220, "Game Launcher");
+		super(800, 600, "Game Launcher");
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 
 		setInput1Panel();
@@ -67,7 +68,7 @@ class GameLauncher extends Window{
 		launchGameButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-				Config userConfig = new Config();
+
 				if (serverRadioButton.isSelected()) {
 					userConfig.userType = "Server";
 				} else {
@@ -82,8 +83,8 @@ class GameLauncher extends Window{
 				frame.dispose();
 
 				// open Game Lobby and pass the user configuration
-				lobbyWindow = new GameLobby(userConfig);
-				Window.setWindow(lobbyWindow);
+				// lobbyWindow = new GameLobby(userConfig);
+				// Window.setWindow(lobbyWindow);
             }
 		});
 
@@ -158,6 +159,10 @@ class GameLauncher extends Window{
 		input2Panel.add(textFieldGroupPanel,c);
 
 		mainPanel.add(input2Panel);
+	}
+
+	public Config getConfig(){
+		return this.userConfig;
 	}
 
 	public void update(){}

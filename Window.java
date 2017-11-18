@@ -1,4 +1,3 @@
-
 import javax.swing.JFrame;
 import java.awt.Graphics;
 public abstract class Window{
