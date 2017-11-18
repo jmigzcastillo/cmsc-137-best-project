@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 
-class GameLobby extends Window{
+public class GameLobby extends Window{
 	// protected JFrame frame = new JFrame("What the Tank?!");
     private JPanel mainPanel = new JPanel();
     private JPanel buttonPanel = new JPanel();
@@ -139,6 +139,9 @@ class GameLobby extends Window{
             }
 	});
     }
+
+    public void update(){}
+    public void render(Graphics g){}
     
 
 }

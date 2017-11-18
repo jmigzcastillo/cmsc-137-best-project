@@ -37,7 +37,8 @@ public class Game implements Runnable{
 
 
 	public synchronized void start(){
-
+		launcherWindow = new GameLauncher();
+		currentWindow = launcherWindow;
 	}
 
 	public synchronized void stop(){

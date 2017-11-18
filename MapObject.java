@@ -1,9 +1,12 @@
-public abstract MapObject{
+import java.awt.Rectangle;
+import java.awt.Graphics;
+
+public abstract class MapObject{
 	protected int x, y;
 	protected float velX = 0, velY = 0;
 
 
-	public GameObject(int x, int y){
+	public MapObject(int x, int y){
 		this.x = x;
 		this.y = y;
 	}

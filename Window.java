@@ -1,7 +1,7 @@
 
 import javax.swing.JFrame;
 import java.awt.Graphics;
-public class Window{
+public abstract class Window{
 	protected JFrame frame;
 	private int width;
 	private int height;
@@ -40,6 +40,6 @@ public class Window{
 		currentWindow = w;
 	}
 
-	public abstract void render();
+	public abstract void render(Graphics g);
 	public abstract void update();
 }

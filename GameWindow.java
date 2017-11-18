@@ -39,4 +39,7 @@ public class GameWindow extends Window{
         frame.setResizable(false);
         input.requestFocus();
 	}
+
+	public void update(){}
+	public void render(Graphics g){}
 }

@@ -160,4 +160,7 @@ class GameLauncher extends Window{
 		mainPanel.add(input2Panel);
 	}
 
+	public void update(){}
+	public void render(Graphics g){}
+
 }
