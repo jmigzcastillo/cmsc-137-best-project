@@ -5,8 +5,8 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 
-class GameLobby{
-	protected JFrame frame = new JFrame("What the Tank?!");
+class GameLobby extends Window{
+	// protected JFrame frame = new JFrame("What the Tank?!");
     private JPanel mainPanel = new JPanel();
     private JPanel buttonPanel = new JPanel();
 
@@ -22,6 +22,7 @@ class GameLobby{
 	private final int FRAME_WIDTH = 600;
 	private final int FRAME_HEIGHT = 600;
 	
+    private Window gameWindow;
 
 	public GameLobby(Config config) {
         /**
@@ -33,7 +34,7 @@ class GameLobby{
          */
 
         // setup server (if chosen) and client here siguro?
-
+        super(600, 600, "What the tank?!");
         initialize();
 
 		frame.setContentPane(mainPanel);
@@ -99,31 +100,9 @@ class GameLobby{
         startGameButton.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-				frame.dispose();
-				JFrame frame = new JFrame("What the Tank?!");
-                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                JPanel panel = new JPanel();
-                panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-                panel.setOpaque(true);
-                JTextArea textArea = new JTextArea(15, 50);
-                textArea.setWrapStyleWord(true);
-                textArea.setEditable(false);
-                textArea.setFont(Font.getFont(Font.SANS_SERIF));
-                JScrollPane scroller = new JScrollPane(textArea);
-                JPanel inputpanel = new JPanel();
-                inputpanel.setLayout(new FlowLayout());
-                JTextField input = new JTextField(20);
-                JButton button = new JButton("Send");
-                panel.add(scroller);
-                inputpanel.add(input);
-                inputpanel.add(button);
-                panel.add(inputpanel);
-                frame.getContentPane().add(BorderLayout.CENTER, panel);
-                frame.pack();
-                frame.setLocationByPlatform(true);
-                frame.setVisible(true);
-                frame.setResizable(false);
-                input.requestFocus();
+                frame.dispose();
+                gameWindow = new GameWindow();
+                Window.setWindow(gameWindow);
             }
 	});
 		instructionGameButton.addActionListener(new ActionListener(){
