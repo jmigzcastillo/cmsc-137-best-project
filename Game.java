@@ -26,6 +26,9 @@ public class Game implements Runnable{
 	private String title;
 	private boolean isRunning;
 
+	//will handle maps
+	private MapObjectHandler handler;
+
 	public Game(String title, int width, int height) {
 		this.title = title;
 		this.width = width;
@@ -52,9 +55,18 @@ public class Game implements Runnable{
 
 	public void render(){
 
+
+
+		//render things here
+		handler.render(g);
+		//
 	}
 
 	public void update(){
 
+		//update things here
+		handler.update();
+
+		//
 	}
 }
