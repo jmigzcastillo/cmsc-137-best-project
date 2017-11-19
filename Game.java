@@ -4,6 +4,7 @@
 //import display related stuff
 import java.awt.image.BufferStrategy;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.Canvas;
@@ -47,12 +48,18 @@ public class Game extends Canvas implements Runnable{
 	private MapObjectHandler handler;
 	private BufferedReader reader;
 
+	//camera for pov effect
+	private Camera camera;
+	
 	//config file
 	private Config config;
 
 	//randomizer
 	private Random randomizer = new Random();
 
+	//player data
+	private int playerCount;
+	
 	public Game(String title, int width, int height) {
 		this.title = title;
 		this.width = width;
@@ -65,9 +72,14 @@ public class Game extends Canvas implements Runnable{
 		handler = new MapObjectHandler();
 
 		//add objects to handler by initializing map
-		mapInitialize(1);
+		mapInitialize(3);
+
+		//spawn player
 		Tank player = new Tank(300,300);
 		handler.addMapObject(player);
+		playerCount = handler.getMapObjectCount();
+		//initialize camera
+		camera = new Camera(300, 300);
 
 		//add key listener for controls
 		this.addKeyListener(new PlayerControls(player));
@@ -124,7 +136,7 @@ public class Game extends Canvas implements Runnable{
 	}
 
 	public void playerSpawn(){
-		
+
 	}
 
 
@@ -184,15 +196,22 @@ public class Game extends Canvas implements Runnable{
 
 		g = b.getDrawGraphics();
 
+		Graphics2D g2d = (Graphics2D) g;
+
 		if(currentState == State.GAME){
-			g.setColor(Color.white);
-			g.fillRect(0,0, 200,600);
+			// g.setColor(Color.white);
+			// g.fillRect(0,0, 200,600);
 			//render ground first
 			g.setColor(Color.lightGray);
 			g.fillRect(200, 0, 600, 600);
+			g2d.translate(-camera.getX(), -camera.getY());
 			//render mapobjects here
 			handler.render(g);
 			//
+			g2d.translate(camera.getX(), camera.getY());
+
+			g.setColor(Color.white);
+			g.fillRect(0,0, 200,600);
 		}
 		else if(currentState == State.LAUNCHER){
 			//render things here
@@ -211,6 +230,7 @@ public class Game extends Canvas implements Runnable{
 
 	public void update(){
 		if(currentState == State.GAME){
+			camera.update(handler.getMapObject(playerCount-1));
 			handler.update();
 		}
 		else if(currentState == State.LAUNCHER){
