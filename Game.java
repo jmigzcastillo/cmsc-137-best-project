@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.Canvas;
+import mapobject.*;
 
 public class Game extends Canvas implements Runnable{
 	//essential stuff
@@ -13,6 +14,7 @@ public class Game extends Canvas implements Runnable{
 	private BufferStrategy b;
 	private Graphics g;
 
+	
 
 	//different windows
 	private GameLauncher launcher;
@@ -41,7 +43,30 @@ public class Game extends Canvas implements Runnable{
 		new Display(width, height, title, this);
 
 		currentState = State.GAME;
-		
+
+		//initialize map object handler
+		handler = new MapObjectHandler();
+
+		//add objects to handler by initializing map
+		// mapInitialize(1);
+		Tank player = new Tank(300,300);
+		handler.addMapObject(player);
+
+		//add key listener for controls
+		this.addKeyListener(new PlayerControls(player));
+
+		start();
+	}
+
+	//require int in the future to identify which map to initialize
+	private void mapInitialize(int mapID){
+		System.out.println("Initializing map...");
+		for(int y=0; y<height; y+=MapObject.BLOCK_SIZE){
+			for(int x=200; x<width; x+=MapObject.BLOCK_SIZE){
+				handler.addMapObject(new Ground(x,y));
+			}
+		}
+		handler.getMapObjectCount();
 	}
 
 
@@ -66,8 +91,8 @@ public class Game extends Canvas implements Runnable{
 		//update 60 times per second
 		this.requestFocus();
 		long lastTime = System.nanoTime();
-		double amountOfTicks = 60.0;
-		double ns = 100000000 / amountOfTicks;
+		double amountOfTicks = 30.0;
+		double ns = 1000000000 / amountOfTicks;
 		double delta = 0;
 		long timer = System.currentTimeMillis();
 		int frames = 0;
@@ -102,7 +127,12 @@ public class Game extends Canvas implements Runnable{
 		g = b.getDrawGraphics();
 
 		if(currentState == State.GAME){
-			//render things here
+			g.setColor(Color.white);
+			g.fillRect(0,0, 200,600);
+			//render ground first
+			g.setColor(Color.lightGray);
+			g.fillRect(200, 0, 600, 600);
+			//render mapobjects here
 			handler.render(g);
 			//
 		}
@@ -136,5 +166,6 @@ public class Game extends Canvas implements Runnable{
 
 	public static void main(String args[]){
 		new Game("What the tank?!", 800, 600);
+		
 	}
 }

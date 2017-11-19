@@ -1,9 +1,15 @@
+package mapobject;
+
 import java.awt.Rectangle;
 import java.awt.Graphics;
 
+
+
 public abstract class MapObject{
 	protected int x, y;
-	protected float velX = 0, velY = 0;
+	protected float velX, velY;
+
+	public static final int BLOCK_SIZE = 30;
 
 
 	public MapObject(int x, int y){

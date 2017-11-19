@@ -5,42 +5,51 @@ Will contain constants for player keybindings
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+import mapobject.Tank;
+
 public class PlayerControls implements KeyListener{
-	private int pressed=0;
-	private int key;
-	protected int p1Up=0;//= KeyEvent.VK_W;
-	protected int p1Left=0;//=KeyEvent.VK_A;
-	protected int p1Down=0;//=KeyEvent.VK_S;
-	protected int p1Right=0;//=KeyEvent.VK_D;
-	protected int p1Fire=0;//=KeyEvent.VK_E;
-	
-	public void	update(){
-		if(key==KeyEvent.VK_W)
-			p1Up=pressed;
-		if(key==KeyEvent.VK_A)
-			p1Left=pressed;
-		if(key==KeyEvent.VK_S)
-			p1Down=pressed;
-		if(key==KeyEvent.VK_D)
-			p1Right=pressed;
-		if(key==KeyEvent.VK_E)
-			p1Fire=pressed;
+	MapObjectHandler handler;
+	Tank tank;
+
+	public PlayerControls(MapObjectHandler handler){
+		this.handler = handler;
 	}
 
+	public PlayerControls(Tank tank){
+		this.tank = tank;
+	}
 
 	public void keyPressed(KeyEvent ke){
-		pressed=1;
-		key=ke.getKeyCode();
-		update();
+		int key = ke.getKeyCode();
+		if(key == KeyEvent.VK_W) tank.setUp(true);
+		if(key == KeyEvent.VK_S) tank.setDown(true);
+		if(key == KeyEvent.VK_A) tank.setLeft(true);
+		if(key == KeyEvent.VK_D) tank.setRight(true);
+		// for(int i=0; i<handler.getMapObjectCount(); i++){
+		// 	if(handler.getMapObject(i).getID() == ID.Player){
+		// 		if(key == keyEvent.VK_W) handler.setUp(true);
+		// 		if(key == keyEvent.VK_S) handler.setDown(true);
+		// 		if(key == keyEvent.VK_A) handler.setLeft(true);
+		// 		if(key == keyEvent.VK_D) handler.setRight(true);
+		// 	}
+		// }
 	}
 
 	public void keyReleased(KeyEvent ke){
-		pressed=0;
-		key=ke.getKeyCode();
-		update();
+		int key = ke.getKeyCode();
+		if(key == KeyEvent.VK_W) tank.setUp(false);
+		if(key == KeyEvent.VK_S) tank.setDown(false);
+		if(key == KeyEvent.VK_A) tank.setLeft(false);
+		if(key == KeyEvent.VK_D) tank.setRight(false);
+		// for(int i=0; i<handler.getMapObjectCount(); i++){
+		// 	if(handler.getMapObject(i).getID() == ID.Player){
+		// 		if(key == keyEvent.VK_W) handler.setUp(false);
+		// 		if(key == keyEvent.VK_S) handler.setDown(false);
+		// 		if(key == keyEvent.VK_A) handler.setLeft(false);
+		// 		if(key == keyEvent.VK_D) handler.setRight(false);
+		// 	}
+		// }
 	}
 
-	public void keyTyped(KeyEvent ke){
-
-	}
+	public void keyTyped(KeyEvent ke){}
 }
