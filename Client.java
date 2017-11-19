@@ -1,7 +1,9 @@
-package chatmodule;
-
 import java.io.*;
 import java.net.*;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Client implements Runnable {
 
@@ -17,6 +19,7 @@ public class Client implements Runnable {
 		try {
 			while ((responseLine = inputStream.readLine()) != null) {
 				System.out.println(responseLine);
+				// i-print dun sa chatbox
 				if (responseLine == "*** Sayonara ***")
 					break;
 			}
@@ -26,10 +29,11 @@ public class Client implements Runnable {
 		}
 	}
 
-	public Client(String host, String port) {
+	public static void main(String[] args) {
 
 		try {
-			int portNumber = Integer.valueOf(port).intValue();
+			String host = args[0];
+			int portNumber = Integer.valueOf(args[1]).intValue();
 
 			clientSocket = new Socket(host, portNumber);
 			inputLine = new BufferedReader(new InputStreamReader(System.in));
@@ -48,7 +52,10 @@ public class Client implements Runnable {
 				// creates thread that reads input from the server
 				new Thread(new Client()).start();
 				while (!closed) {
+					//read from the send box
 					outputStream.println(inputLine.readLine().trim());
+					// outputStream.println(inputLine.readLine().trim());
+					// outputStream.println(<ilagay mo rito yung sasabihin>);
 				}
 				// closing time
 				outputStream.close();
@@ -58,6 +65,14 @@ public class Client implements Runnable {
 				e.printStackTrace();
 			}
 		}
+		// gameLobby.sendGameButton.addActionListener(new ActionListener() {
+		// 	@Override
+		// 	public void actionPerformed(ActionEvent e) {
+		// 		outputStream.println(gameLobby.chatInputField.getText().trim());
+		// 		System.out.println(gameLobby.chatInputField.getText().trim());
+		// 	}
+		// });
+		GameLobby gameLobby = new GameLobby(outputStream);
 	}
 
 }
