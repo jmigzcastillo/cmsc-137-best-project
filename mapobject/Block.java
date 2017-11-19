@@ -18,7 +18,7 @@ public class Block extends MapObject{
 
 	public void render(Graphics g){
 		g.setColor(Color.GRAY);
-		g.fillRect(x, y, MapObject.BLOCK_SIZE, MapObject.BLOCK_SIZE);
+		g.fillRect(x, y, BLOCK_SIZE, BLOCK_SIZE);
 	}
 	public void update(){}
 

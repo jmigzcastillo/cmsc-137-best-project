@@ -86,7 +86,7 @@ public class Game extends Canvas implements Runnable{
 
 		//add key listener for controls
 		this.addKeyListener(new PlayerControls(player));
-
+		this.addMouseListener(new PlayerAim(handler, player, camera));
 		start();
 	}
 
@@ -232,6 +232,7 @@ public class Game extends Canvas implements Runnable{
 	}
 
 	public void update(){
+		playerCount = handler.getMapObjectCount();
 		if(currentState == State.GAME){
 			camera.update(handler.getMapObject(playerCount-1));
 			handler.update();

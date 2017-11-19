@@ -20,12 +20,12 @@ public class Powerup extends MapObject{
 
 	public void render(Graphics g){
 		g.setColor(Color.MAGENTA);
-		g.fillRect(x, y, MapObject.BLOCK_SIZE, MapObject.BLOCK_SIZE);
+		g.fillRect(x, y, BLOCK_SIZE, BLOCK_SIZE);
 	}
 	public void update(){}
 
 	public Rectangle getBounds(){
-		Rectangle bound = new Rectangle();
+		Rectangle bound = new Rectangle(x, y, BLOCK_SIZE, BLOCK_SIZE);
 
 		return bound;
 	}

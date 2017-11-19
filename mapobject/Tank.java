@@ -49,12 +49,12 @@ public class Tank extends MapObject{
 	private void checkCollision(){
 		for(int i=0; i<handler.getMapObjectCount(); i++){
 			MapObject temp = handler.getMapObject(i);
-			
+
 			if(temp.getId() == ID.Block){
 				if(getBounds().intersects(temp.getBounds())){
 					x += velX * -1;
 					y += velY * -1;
-					System.out.println("collision!");
+					// System.out.println("collision!");
 				}
 			}
 		}
