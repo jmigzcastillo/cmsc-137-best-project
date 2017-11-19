@@ -1,12 +1,25 @@
 /**
  * Game Window Handler
  */
+//import display related stuff
 import java.awt.image.BufferStrategy;
 import java.awt.Graphics;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.Canvas;
+
+//import file i/o
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+//import randomizer
+import java.util.Random;
+
+//import map objects
 import mapobject.*;
+
+
 
 public class Game extends Canvas implements Runnable{
 	//essential stuff
@@ -32,9 +45,13 @@ public class Game extends Canvas implements Runnable{
 
 	//will handle map objects
 	private MapObjectHandler handler;
+	private BufferedReader reader;
 
 	//config file
 	private Config config;
+
+	//randomizer
+	private Random randomizer = new Random();
 
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -48,7 +65,7 @@ public class Game extends Canvas implements Runnable{
 		handler = new MapObjectHandler();
 
 		//add objects to handler by initializing map
-		// mapInitialize(1);
+		mapInitialize(1);
 		Tank player = new Tank(300,300);
 		handler.addMapObject(player);
 
@@ -61,12 +78,53 @@ public class Game extends Canvas implements Runnable{
 	//require int in the future to identify which map to initialize
 	private void mapInitialize(int mapID){
 		System.out.println("Initializing map...");
-		for(int y=0; y<height; y+=MapObject.BLOCK_SIZE){
-			for(int x=200; x<width; x+=MapObject.BLOCK_SIZE){
-				handler.addMapObject(new Ground(x,y));
+		String path = null;
+
+		PowerupEffect[] powerups = PowerupEffect.values();
+		int x = 200;
+		int y = 0;
+		if(mapID == 1) path = "maps/small.in";
+		else if(mapID == 2) path = "maps/medium.in";
+		else path = "maps/large.in";
+
+
+		try{
+			reader = new BufferedReader(new FileReader(path));
+		}catch(FileNotFoundException e){
+			e.printStackTrace();
+		}
+		
+		String row = null;
+		try{
+			row = reader.readLine();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		
+		while(row  != null){
+			char[] tiles = row.toCharArray();
+			for(char c : tiles){
+				if(c == 'B') handler.addMapObject(new Block(x,y));
+				else if(c == 'U') {
+					PowerupEffect effect = powerups[randomizer.nextInt(powerups.length)];
+					handler.addMapObject(new Powerup(x,y, effect));
+				}
+				x += MapObject.BLOCK_SIZE;
+			}
+			y += MapObject.BLOCK_SIZE;
+			x = 200;
+			try{
+				row = reader.readLine();
+			}catch(IOException e){
+				e.printStackTrace();
 			}
 		}
+
 		handler.getMapObjectCount();
+	}
+
+	public void playerSpawn(){
+		
 	}
 
 

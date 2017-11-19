@@ -1,3 +1,5 @@
+package mapobject;
+
 public enum PowerupEffect{
 	SPEEDUP,
 	SHIELD,

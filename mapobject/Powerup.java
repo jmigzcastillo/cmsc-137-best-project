@@ -12,8 +12,8 @@ public class Powerup extends MapObject{
 
 	public Powerup(int x, int y, PowerupEffect effect){
 		super(x, y);
-		this.velX = 0.0;
-		this.velY = 0.0;
+		this.velX = 0;
+		this.velY = 0;
 		this.effect = effect;
 	}
 

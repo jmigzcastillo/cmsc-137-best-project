@@ -11,8 +11,8 @@ public class Block extends MapObject{
 
 	public Block(int x, int y){
 		super(x, y);
-		this.velX = 0.0;
-		this.velY = 0.0;
+		this.velX = 0;
+		this.velY = 0;
 	}
 
 
