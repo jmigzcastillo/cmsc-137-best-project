@@ -72,7 +72,7 @@ public class Game extends Canvas implements Runnable{
 		handler = new MapObjectHandler();
 
 		//add objects to handler by initializing map
-		mapInitialize(3);
+		mapInitialize(2);
 
 		//spawn player
 		Tank player = new Tank(300,300);
