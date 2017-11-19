@@ -15,7 +15,6 @@ public class Game extends Canvas implements Runnable{
 
 
 	//different windows
-	private GameLauncher launcher;
 	private GameLobby lobby;
 
 	private State currentState;
@@ -30,9 +29,6 @@ public class Game extends Canvas implements Runnable{
 
 	//will handle map objects
 	private MapObjectHandler handler;
-
-	//config file
-	private Config config;
 
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -106,11 +102,6 @@ public class Game extends Canvas implements Runnable{
 			handler.render(g);
 			//
 		}
-		else if(currentState == State.LAUNCHER){
-			//render things here
-			launcher.render(g);
-			//
-		}
 		else if(currentState == State.LOBBY){
 			//render things here
 			lobby.render(g);
@@ -124,10 +115,6 @@ public class Game extends Canvas implements Runnable{
 	public void update(){
 		if(currentState == State.GAME){
 			handler.update();
-		}
-		else if(currentState == State.LAUNCHER){
-			launcher.update();
-			config = launcher.getConfig();
 		}
 		else if(currentState == State.LOBBY){
 			lobby.update();
