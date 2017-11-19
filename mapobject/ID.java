@@ -1,7 +1,8 @@
+package mapobject;
+
 public enum ID{
-	Player(),
-	Block(),
-	Ground(),
-	Bullet(),
-	Powerup();
+	Tank,
+	Block,
+	Bullet,
+	Powerup;
 }

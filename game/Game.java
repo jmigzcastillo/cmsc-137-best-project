@@ -1,6 +1,9 @@
 /**
  * Game Window Handler
  */
+
+package game;
+
 //import display related stuff
 import java.awt.image.BufferStrategy;
 import java.awt.Graphics;
@@ -31,8 +34,8 @@ public class Game extends Canvas implements Runnable{
 	
 
 	//different windows
-	private GameLauncher launcher;
-	private GameLobby lobby;
+	// private GameLauncher launcher;
+	// private GameLobby lobby;
 
 	private State currentState;
 
@@ -52,7 +55,7 @@ public class Game extends Canvas implements Runnable{
 	private Camera camera;
 	
 	//config file
-	private Config config;
+	// private Config config;
 
 	//randomizer
 	private Random randomizer = new Random();
@@ -75,7 +78,7 @@ public class Game extends Canvas implements Runnable{
 		mapInitialize(2);
 
 		//spawn player
-		Tank player = new Tank(300,300);
+		Tank player = new Tank(300,300, handler);
 		handler.addMapObject(player);
 		playerCount = handler.getMapObjectCount();
 		//initialize camera
@@ -213,16 +216,16 @@ public class Game extends Canvas implements Runnable{
 			g.setColor(Color.white);
 			g.fillRect(0,0, 200,600);
 		}
-		else if(currentState == State.LAUNCHER){
-			//render things here
-			launcher.render(g);
-			//
-		}
-		else if(currentState == State.LOBBY){
-			//render things here
-			lobby.render(g);
-			//
-		}
+		// else if(currentState == State.LAUNCHER){
+		// 	//render things here
+		// 	launcher.render(g);
+		// 	//
+		// }
+		// else if(currentState == State.LOBBY){
+		// 	//render things here
+		// 	lobby.render(g);
+		// 	//
+		// }
 
 		g.dispose();
 		b.show();
@@ -233,13 +236,13 @@ public class Game extends Canvas implements Runnable{
 			camera.update(handler.getMapObject(playerCount-1));
 			handler.update();
 		}
-		else if(currentState == State.LAUNCHER){
-			launcher.update();
-			config = launcher.getConfig();
-		}
-		else if(currentState == State.LOBBY){
-			lobby.update();
-		}
+		// else if(currentState == State.LAUNCHER){
+		// 	launcher.update();
+		// 	config = launcher.getConfig();
+		// }
+		// else if(currentState == State.LOBBY){
+		// 	lobby.update();
+		// }
 	}
 
 	public static void main(String args[]){

@@ -10,7 +10,7 @@ public class Block extends MapObject{
 	
 
 	public Block(int x, int y){
-		super(x, y);
+		super(x, y, ID.Block);
 		this.velX = 0;
 		this.velY = 0;
 	}
@@ -23,9 +23,7 @@ public class Block extends MapObject{
 	public void update(){}
 
 	public Rectangle getBounds(){
-		Rectangle bound = new Rectangle();
-
-		return bound;
+		return new Rectangle(x, y, BLOCK_SIZE, BLOCK_SIZE);
 	}
 	
 }

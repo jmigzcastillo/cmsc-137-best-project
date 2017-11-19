@@ -1,3 +1,5 @@
+package game;
+
 import mapobject.MapObject;
 
 public class Camera{
@@ -27,7 +29,7 @@ public class Camera{
 		this.x = x;
 	}
 
-	public void setY(float Y){
+	public void setY(float y){
 		this.y = y;
 	}
 }

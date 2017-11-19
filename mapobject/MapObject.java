@@ -11,10 +11,12 @@ public abstract class MapObject{
 
 	public static final int BLOCK_SIZE = 30;
 
-
-	public MapObject(int x, int y){
+	private ID id;
+	public MapObject(int x, int y, ID id){
 		this.x = x;
 		this.y = y;
+		this.id = id;
+		
 	}
 
 	public int getX(){
@@ -31,6 +33,10 @@ public abstract class MapObject{
 
 	public float getVelY(){
 		return this.velY;
+	}
+
+	public ID getId(){
+		return this.id;
 	}
 
 	public abstract void update();
