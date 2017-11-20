@@ -75,7 +75,7 @@ public class Game extends Canvas implements Runnable{
 		handler = new MapObjectHandler();
 
 		//add objects to handler by initializing map
-		mapInitialize(2);
+		mapInitialize(3);
 
 		//spawn player
 		Tank player = new Tank(300,300, handler);
@@ -119,7 +119,8 @@ public class Game extends Canvas implements Runnable{
 		while(row  != null){
 			char[] tiles = row.toCharArray();
 			for(char c : tiles){
-				if(c == 'B') handler.addMapObject(new Block(x,y));
+				if(c == 'I') handler.addMapObject(new InvincibleBlock(x,y));
+				else if(c == 'B') handler.addMapObject(new Block(x,y));
 				else if(c == 'U') {
 					PowerupEffect effect = powerups[randomizer.nextInt(powerups.length)];
 					handler.addMapObject(new Powerup(x,y, effect));
@@ -164,7 +165,7 @@ public class Game extends Canvas implements Runnable{
 		//update 60 times per second
 		this.requestFocus();
 		long lastTime = System.nanoTime();
-		double amountOfTicks = 30.0;
+		double amountOfTicks = 60.0;
 		double ns = 1000000000 / amountOfTicks;
 		double delta = 0;
 		long timer = System.currentTimeMillis();

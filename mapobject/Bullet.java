@@ -55,10 +55,16 @@ public class Bullet extends MapObject{
 					}
 					handler.removeMapObject(temp);
 					handler.removeMapObject(this);
+					
+					
+				}
+			}
+			else if(temp.getId() == ID.InvincibleBlock){
+				if(getBounds().intersects(temp.getBounds())){
+					handler.removeMapObject(this);
 				}
 			}
 				
-					
 			
 		}
 	}

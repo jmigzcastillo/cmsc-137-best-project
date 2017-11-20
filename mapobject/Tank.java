@@ -75,7 +75,7 @@ public class Tank extends MapObject{
 		for(int i=0; i<handler.getMapObjectCount(); i++){
 			MapObject temp = handler.getMapObject(i);
 
-			if(temp.getId() == ID.Block){
+			if(temp.getId() == ID.Block || temp.getId() == ID.InvincibleBlock){
 				if(getBounds().intersects(temp.getBounds())){
 					x += velX * -1;
 					y += velY * -1;
