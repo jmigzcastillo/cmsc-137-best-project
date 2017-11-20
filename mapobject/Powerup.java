@@ -29,5 +29,9 @@ public class Powerup extends MapObject{
 
 		return bound;
 	}
+
+	public PowerupEffect getPowerupEffect(){
+		return this.effect;
+	}
 	
 }

@@ -7,11 +7,15 @@ import java.awt.Color;
 import game.MapObjectHandler;
 import game.Camera;
 
+import java.util.Random;
+
 public class Bullet extends MapObject{
 
 	private MapObjectHandler handler;
 	private Camera camera;
 
+
+	private static Random randomizer = new Random();
 	private static final int BULLET_SIZE = 6;
 
 	public Bullet(int x, int y, MapObjectHandler handler, Camera camera, int mx, int my){
@@ -20,6 +24,7 @@ public class Bullet extends MapObject{
 		this.handler = handler;
 		this.camera = camera;
 
+		// int slope = (mx - x) / (my - y);
 		velX = (mx - x) / 10;
 		velY = (my - y) / 10;
 		
@@ -35,8 +40,21 @@ public class Bullet extends MapObject{
 
 			if(temp.getId() == ID.Block){
 				if(getBounds().intersects(temp.getBounds())){
-					handler.removeMapObject(this);
+					int rand = randomizer.nextInt(150);
+					if(rand == 1){
+						handler.addMapObject(new Powerup(temp.getX(), temp.getY(), PowerupEffect.INVISIBLE));
+					}
+					else if(rand == 2){
+						handler.addMapObject(new Powerup(temp.getX(), temp.getY(), PowerupEffect.SATTACK));
+					}
+					else if(rand == 3){
+						handler.addMapObject(new Powerup(temp.getX(), temp.getY(), PowerupEffect.SHIELD));
+					}
+					else if(rand == 4){
+						handler.addMapObject(new Powerup(temp.getX(), temp.getY(), PowerupEffect.SPEEDUP));
+					}
 					handler.removeMapObject(temp);
+					handler.removeMapObject(this);
 				}
 			}
 				
