@@ -40,5 +40,8 @@ public class MapObjectHandler{
 		return mapObjects.get(i);
 	}
 
+	public int getIndexOf(MapObject object){
+		return mapObjects.indexOf(object);
+	}
 
 }

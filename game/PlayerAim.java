@@ -21,7 +21,7 @@ public class PlayerAim implements MouseListener{
 		int mx = (int) (e.getX() + camera.getX());
 		int my = (int) (e.getY() + camera.getY());
 
-		handler.addMapObject(new Bullet(tank.getX()+5, tank.getY()+5, handler, camera, mx, my));
+		handler.addMapObject(new Bullet(tank.getX()+10, tank.getY()+10, handler, camera, mx, my));
 	}
 
 	public void mouseClicked(MouseEvent e){}

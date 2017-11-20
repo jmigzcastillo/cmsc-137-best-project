@@ -234,7 +234,14 @@ public class Game extends Canvas implements Runnable{
 	public void update(){
 		playerCount = handler.getMapObjectCount();
 		if(currentState == State.GAME){
-			camera.update(handler.getMapObject(playerCount-1));
+			for(int i=0; i<handler.getMapObjectCount(); i++){
+				MapObject temp = handler.getMapObject(i);
+				if (temp.getId() == ID.Tank){
+					camera.update(temp);
+				}
+			}
+
+			
 			handler.update();
 		}
 		// else if(currentState == State.LAUNCHER){
