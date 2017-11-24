@@ -1,14 +1,22 @@
+package mapobject;
+
 import java.awt.Rectangle;
 import java.awt.Graphics;
 
+
+
 public abstract class MapObject{
 	protected int x, y;
-	protected float velX = 0, velY = 0;
+	protected float velX, velY;
 
+	public static final int BLOCK_SIZE = 30;
 
-	public MapObject(int x, int y){
+	private ID id;
+	public MapObject(int x, int y, ID id){
 		this.x = x;
 		this.y = y;
+		this.id = id;
+		
 	}
 
 	public int getX(){
@@ -25,6 +33,10 @@ public abstract class MapObject{
 
 	public float getVelY(){
 		return this.velY;
+	}
+
+	public ID getId(){
+		return this.id;
 	}
 
 	public abstract void update();

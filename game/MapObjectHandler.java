@@ -1,9 +1,14 @@
+package game;
+
 import java.awt.Graphics;
 import java.util.LinkedList;
+
+import mapobject.*;
 
 public class MapObjectHandler{
 	private LinkedList<MapObject> mapObjects = new LinkedList<MapObject>();
 
+	
 
 	public void update(){
 		for(int i=0; i<mapObjects.size(); i++){
@@ -13,8 +18,9 @@ public class MapObjectHandler{
 
 	public void render(Graphics g){
 		for(int i=0; i<mapObjects.size(); i++){
-			mapObjects.get(i).render(g);
-		}
+			MapObject temp = mapObjects.get(i);
+			temp.render(g);
+		}	
 
 	}
 
@@ -26,6 +32,16 @@ public class MapObjectHandler{
 		mapObjects.remove(obj);
 	}
 
+	public int getMapObjectCount(){
+		return mapObjects.size();
+	}
 
+	public MapObject getMapObject(int i){
+		return mapObjects.get(i);
+	}
+
+	public int getIndexOf(MapObject object){
+		return mapObjects.indexOf(object);
+	}
 
 }
