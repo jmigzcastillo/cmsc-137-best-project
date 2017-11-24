@@ -1,3 +1,5 @@
+package chatmodule;
+
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -13,13 +15,13 @@ public class Server {
 	private static final ArrayList<ClientsThread> clientThread = new ArrayList<ClientsThread>(
 			Collections.nCopies(MAX_NUMBER_OF_CLIENTS,null));
 
-	public static void main(String args[]) {
+	public Server(String port) {
 
 		// opens a server socket on a port (must be greater than 1023)
 		try {
-			int port = Integer.valueOf(args[0]).intValue();
-			serverSocket = new ServerSocket(port);
-			System.out.println("Server listening at port:" + port);
+			int portNumber = Integer.valueOf(port).intValue();
+			serverSocket = new ServerSocket(portNumber);
+			System.out.println("Server listening at port:" + portNumber);
 		} catch(IOException e){
             System.out.println("Usage: java Server <port no.>\n"+
 					"Make sure to use valid ports (greater than 1023)");
@@ -53,4 +55,5 @@ public class Server {
 			}
 		}
 	}
+
 }

@@ -1,6 +1,7 @@
 /**
- * Contains all clients and allows the server send all incoming messages to every client
+ * Contains all clients and allows the server send all incoming messages to every client.
  */
+package chatmodule;
 
 import java.io.*;
 import java.net.*;
