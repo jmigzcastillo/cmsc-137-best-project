@@ -24,16 +24,8 @@ public class GameLobby extends Window{
 	
     private Window gameWindow;
 
-	public GameLobby(Config config) {
-        /**
-         * config contains:
-         *   - userType
-         *   - hostIP
-         *   - portNumber
-         *   - username
-         */
+	public GameLobby() {
 
-        // setup server (if chosen) and client here siguro?
         super(600, 600, "What the tank?!");
         initialize();
 
