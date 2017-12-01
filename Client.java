@@ -32,7 +32,7 @@ public class Client implements Runnable {
 
 	public static void main(String[] args) {
 		new Game("What the tank?!", 800, 600);
-		
+
 		try {
 			String host = args[0];
 			int portNumber = Integer.valueOf(args[1]).intValue();
