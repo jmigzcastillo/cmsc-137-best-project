@@ -32,12 +32,16 @@ public class Display{
 	private JTextField textField;
 	private JTextArea chatArea;
 
+	public String name;
+
 	public Display(int width, int height, String title, Game game){
 		JFrame frame = new JFrame(title);
 
 		frame.setPreferredSize(new Dimension(width, height));
 		frame.setMinimumSize(new Dimension(width, height));
 		frame.setMaximumSize(new Dimension(width, height));
+
+		name = JOptionPane.showInputDialog(null, "Enter your name: ");
 
 		chatPanel = new JPanel();
 		chatPanel.setLayout(new BorderLayout());
