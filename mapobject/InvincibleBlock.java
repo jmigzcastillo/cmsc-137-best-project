@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Color;
 
-
+import game.ImageLoader;
 
 public class InvincibleBlock extends MapObject{
 	
@@ -17,8 +17,9 @@ public class InvincibleBlock extends MapObject{
 
 
 	public void render(Graphics g){
-		g.setColor(Color.BLACK);
-		g.fillRect(x, y, BLOCK_SIZE, BLOCK_SIZE);
+		// g.setColor(Color.BLACK);
+		// g.fillRect(x, y, BLOCK_SIZE, BLOCK_SIZE);
+		g.drawImage(ImageLoader.block, x, y, BLOCK_SIZE,BLOCK_SIZE, null, null);
 	}
 	public void update(){}
 

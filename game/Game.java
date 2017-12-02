@@ -71,6 +71,9 @@ public class Game extends Canvas implements Runnable{
 
 		currentState = State.GAME;
 
+		//initialize sprites
+		ImageLoader.init();
+
 		//initialize map object handler
 		handler = new MapObjectHandler();
 

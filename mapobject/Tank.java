@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import java.awt.Color;
 
 import game.MapObjectHandler;
-
+import game.ImageLoader;
 public class Tank extends MapObject{
 
 	
@@ -62,8 +62,8 @@ public class Tank extends MapObject{
 	public void render(Graphics g){
 		if (currentBuff == PowerupEffect.INVISIBLE) g.setColor(Color.YELLOW);
 		else g.setColor(Color.GREEN);
-		g.fillRect(x, y, BLOCK_SIZE, BLOCK_SIZE);
-
+		// g.fillRect(x, y, BLOCK_SIZE, BLOCK_SIZE);
+		g.drawImage(ImageLoader.tankB, x,y, null);
 		if(currentBuff == PowerupEffect.SHIELD){
 			g.setColor(Color.blue);
 			g.drawRect(x,y, BLOCK_SIZE, BLOCK_SIZE);
@@ -86,6 +86,8 @@ public class Tank extends MapObject{
 			else if(temp.getId() == ID.Powerup){
 				if(getBounds().intersects(temp.getBounds())){
 					Powerup buff = (Powerup) temp;
+					//remove current buff(if there is one), then absorb new buff
+					normalize();
 					absorb(buff);
 					handler.removeMapObject(temp);
 				}
@@ -121,6 +123,7 @@ public class Tank extends MapObject{
 	}
 
 	private void normalize(){
+		if (this.currentBuff == PowerupEffect.NONE) return;
 		if(this.currentBuff == PowerupEffect.INVISIBLE){
 			this.isInvisible = false;
 		}
