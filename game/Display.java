@@ -3,14 +3,18 @@ package game;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JTextArea;
+import javax.swing.BoxLayout;
+import javax.swing.*;
 
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 
 public class Display{
 
@@ -24,6 +28,12 @@ public class Display{
 	private JButton instructionsButton;
 	private JButton mainMenuButton;
 
+	private JScrollPane scrollPane;
+	private JTextField textField;
+	private JTextArea chatArea;
+
+	public String name;
+
 	public Display(int width, int height, String title, Game game){
 		JFrame frame = new JFrame(title);
 
@@ -31,9 +41,26 @@ public class Display{
 		frame.setMinimumSize(new Dimension(width, height));
 		frame.setMaximumSize(new Dimension(width, height));
 
+		name = JOptionPane.showInputDialog(null, "Enter your name: ");
+
 		chatPanel = new JPanel();
+		chatPanel.setLayout(new BorderLayout());
 		chatPanel.setSize(200, 600);
-		chatPanel.setBackground(Color.RED);
+		chatPanel.setBackground(Color.BLACK);
+
+		textField = new JTextField(20);
+		textField.setPreferredSize(new Dimension(20, 200));
+		chatArea = new JTextArea(30,4);
+		chatArea.setPreferredSize(new Dimension(200, 520));
+		chatArea.setBackground(Color.BLACK);
+		chatArea.setForeground(Color.WHITE);
+		
+		scrollPane = new JScrollPane(chatArea);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        chatArea.setEditable(false);
+
+		chatPanel.add(chatArea, BorderLayout.PAGE_START);
+		chatPanel.add(textField, BorderLayout.CENTER);
 
 		frame.add(chatPanel);
 
@@ -66,8 +93,16 @@ public class Display{
 
 	void initLobby() {
 		lobby = new JPanel();
+		lobby.setLayout(new BoxLayout(lobby, BoxLayout.Y_AXIS));
 		playButton = new JButton("Play");
+		playButton.setPreferredSize(new Dimension(300, 30));
+		playButton.setBackground(Color.GREEN);
+		playButton.setForeground(Color.WHITE);		
 		instructionsButton = new JButton("Instructions");
+		instructionsButton.setPreferredSize(new Dimension(300, 30));
+		instructionsButton.setBackground(Color.BLUE);
+		instructionsButton.setForeground(Color.WHITE);	
+		// lobby.add(Box.createVerticalGlue());
 		lobby.add(playButton);
 		playButton.addActionListener(new ActionListener(){
 			@Override
@@ -85,6 +120,7 @@ public class Display{
 				cardLayout.show(cards, "Instructions");
 			}
 		});
+		// lobby.add(Box.createVerticalGlue());
 	}
 
 	void initInstructions() {

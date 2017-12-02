@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.*;
+import game.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -30,6 +31,7 @@ public class Client implements Runnable {
 	}
 
 	public static void main(String[] args) {
+		new Game("What the tank?!", 800, 600);
 
 		try {
 			String host = args[0];
