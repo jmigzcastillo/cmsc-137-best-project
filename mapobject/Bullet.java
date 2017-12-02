@@ -18,9 +18,12 @@ public class Bullet extends MapObject{
 	private static Random randomizer = new Random();
 	private static final int BULLET_SIZE = 6;
 
-	public Bullet(int x, int y, MapObjectHandler handler, Camera camera, int mx, int my){
+	private int damage;
+	private boolean strong;
+	public Bullet(int x, int y, MapObjectHandler handler, Camera camera, int mx, int my, int damage, boolean strong){
 		super(x, y, ID.Bullet);
-
+		this.damage = damage;
+		this.strong = strong;
 		this.handler = handler;
 		this.camera = camera;
 
@@ -69,7 +72,8 @@ public class Bullet extends MapObject{
 		}
 	}
 	public void render(Graphics g){
-		g.setColor(Color.RED);
+		if (this.strong)	g.setColor(Color.RED);
+		else g.setColor(Color.BLUE);
 		g.fillOval(x, y, BULLET_SIZE, BULLET_SIZE);
 	}
 

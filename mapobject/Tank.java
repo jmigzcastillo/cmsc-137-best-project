@@ -170,5 +170,14 @@ public class Tank extends MapObject{
 	public boolean getRight(){
 		return this.right;
 	}
+
+	public int getDamage(){
+		return this.damage;
+	}
+
+	public boolean isSAttack(){
+		if (this.currentBuff == PowerupEffect.SATTACK) return true;
+		else return false;
+	}
 }
 
