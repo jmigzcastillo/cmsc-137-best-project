@@ -45,6 +45,7 @@ public class Game extends Canvas implements Runnable{
 	private int width;
 	private int height;
 	private String title;
+	
 	private boolean isRunning;
 
 	//will handle map objects
@@ -53,6 +54,10 @@ public class Game extends Canvas implements Runnable{
 
 	//camera for pov effect
 	private Camera camera;
+	
+	//map parameters
+	private int mapID;
+	private int mapSize = 0;
 	
 	//config file
 	// private Config config;
@@ -78,7 +83,8 @@ public class Game extends Canvas implements Runnable{
 		handler = new MapObjectHandler();
 
 		//add objects to handler by initializing map
-		mapInitialize(3);
+		mapID = 1;
+		mapInitialize(mapID);
 
 		//spawn player
 		Tank player = new Tank(300,300, handler);
@@ -98,20 +104,27 @@ public class Game extends Canvas implements Runnable{
 		System.out.println("Initializing map...");
 		String path = null;
 
+		//prepare list of powerups for randomizer
 		PowerupEffect[] powerups = PowerupEffect.values();
+		
+		//game will be rendered in these window parameters
 		int x = 200;
 		int y = 0;
+
+		//map to be rendered depends on mapID passed
 		if(mapID == 1) path = "maps/small.in";
 		else if(mapID == 2) path = "maps/medium.in";
 		else path = "maps/large.in";
 
 
+		//attempt to read map, throw exception if unable to
 		try{
 			reader = new BufferedReader(new FileReader(path));
 		}catch(FileNotFoundException e){
 			e.printStackTrace();
 		}
 		
+		//read first line from map
 		String row = null;
 		try{
 			row = reader.readLine();
@@ -119,19 +132,34 @@ public class Game extends Canvas implements Runnable{
 			e.printStackTrace();
 		}
 		
+		//read map file until end
 		while(row  != null){
+			//get length of map
+			mapSize += 1;
+			
+			//convert to char array to read characters one by one
 			char[] tiles = row.toCharArray();
+			
+			//read characters
 			for(char c : tiles){
+
+				//create new map objects based on mapfile character
 				if(c == 'I') handler.addMapObject(new InvincibleBlock(x,y));
 				else if(c == 'B') handler.addMapObject(new Block(x,y));
 				else if(c == 'U') {
 					PowerupEffect effect = powerups[randomizer.nextInt(powerups.length)];
 					handler.addMapObject(new Powerup(x,y, effect));
 				}
+				//increment x axis
 				x += MapObject.BLOCK_SIZE;
+				
 			}
+
+			//increment y axis and reset x position
 			y += MapObject.BLOCK_SIZE;
 			x = 200;
+
+			//read next line in mapfile
 			try{
 				row = reader.readLine();
 			}catch(IOException e){
@@ -139,7 +167,10 @@ public class Game extends Canvas implements Runnable{
 			}
 		}
 
-		handler.getMapObjectCount();
+		//print map size
+		// System.out.println("Size of map is " + mapSize + " x " + mapSize);
+		// print number of objects
+		// handler.getMapObjectCount();
 	}
 
 	public void playerSpawn(){
@@ -206,19 +237,24 @@ public class Game extends Canvas implements Runnable{
 		Graphics2D g2d = (Graphics2D) g;
 
 		if(currentState == State.GAME){
-			// g.setColor(Color.white);
-			// g.fillRect(0,0, 200,600);
-			//render ground first
+			//render background first
 			g.setColor(Color.lightGray);
 			g.fillRect(200, 0, 600, 600);
+
+			//set camera coordinates
 			g2d.translate(-camera.getX(), -camera.getY());
-			//render mapobjects here
+			
+			//render ground
+			g.setColor(Color.white);
+			g.fillRect(200, 0, (MapObject.BLOCK_SIZE*(mapSize-1)), MapObject.BLOCK_SIZE*mapSize);
+			
+			//render mapobjects
 			handler.render(g);
 			//
 			g2d.translate(camera.getX(), camera.getY());
 
-			g.setColor(Color.white);
-			g.fillRect(0,0, 200,600);
+			// g.setColor(Color.white);
+			// g.fillRect(0,0, 200,600);
 		}
 		// else if(currentState == State.LAUNCHER){
 		// 	//render things here
