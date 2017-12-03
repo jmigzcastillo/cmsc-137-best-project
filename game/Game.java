@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.Canvas;
+import java.awt.Rectangle;
 
 //import file i/o
 import java.io.BufferedReader;
@@ -83,21 +84,23 @@ public class Game extends Canvas implements Runnable{
 		handler = new MapObjectHandler();
 
 		//add objects to handler by initializing map
-		mapID = 1;
+		mapID = 2;
 		mapInitialize(mapID);
 
 		//spawn player
-		Tank player = new Tank(300,300, handler);
-		handler.addMapObject(player);
-		playerCount = handler.getMapObjectCount();
+		Tank player1 = playerSpawn(1, "Weaboo");
+		Tank player2 = playerSpawn(2, "Normie");
+
+		
 		//initialize camera
-		camera = new Camera(300, 300);
+		camera = new Camera(player1.getX(), player1.getY());
 
 		//add key listener for controls
-		this.addKeyListener(new PlayerControls(player));
-		this.addMouseListener(new PlayerAim(handler, player, camera));
+		this.addKeyListener(new PlayerControls(player1));
+		this.addMouseListener(new PlayerAim(handler, player1, camera));
 		start();
 	}
+
 
 	//require int in the future to identify which map to initialize
 	private void mapInitialize(int mapID){
@@ -115,6 +118,7 @@ public class Game extends Canvas implements Runnable{
 		if(mapID == 1) path = "maps/small.in";
 		else if(mapID == 2) path = "maps/medium.in";
 		else path = "maps/large.in";
+
 
 
 		//attempt to read map, throw exception if unable to
@@ -168,13 +172,34 @@ public class Game extends Canvas implements Runnable{
 		}
 
 		//print map size
-		// System.out.println("Size of map is " + mapSize + " x " + mapSize);
+		System.out.println("Size of map is " + mapSize + " x " + mapSize);
 		// print number of objects
 		// handler.getMapObjectCount();
 	}
 
-	public void playerSpawn(){
-
+	public Tank playerSpawn(int playerID, String name){
+		int x = randomizer.nextInt(mapSize-1);
+		int y = randomizer.nextInt(mapSize-1);
+		Rectangle bound = new Rectangle((x*MapObject.BLOCK_SIZE)+200, y*MapObject.BLOCK_SIZE, MapObject.BLOCK_SIZE,MapObject.BLOCK_SIZE);
+		System.out.println("Spawning player " + playerID + ": " + name);
+		while(true){
+			for(int i=0; i<handler.getMapObjectCount(); i++){
+				MapObject temp = handler.getMapObject(i);
+				
+				//create player if coordinates does not collide with map object
+				if(!temp.getBounds().intersects(bound)){
+					System.out.println("Player " + name + " spawned at" + x + "," + y);
+					Tank player = new Tank((x*MapObject.BLOCK_SIZE)+200, y*MapObject.BLOCK_SIZE, playerID, name, handler);
+					handler.addMapObject(player);
+					return player;
+				}
+			}
+			x = randomizer.nextInt(mapSize-1);
+			y = randomizer.nextInt(mapSize-1);
+			bound = new Rectangle((x*MapObject.BLOCK_SIZE)+200, y*MapObject.BLOCK_SIZE, MapObject.BLOCK_SIZE,MapObject.BLOCK_SIZE);
+		}
+		
+		
 	}
 
 
@@ -278,7 +303,9 @@ public class Game extends Canvas implements Runnable{
 			for(int i=0; i<handler.getMapObjectCount(); i++){
 				MapObject temp = handler.getMapObject(i);
 				if (temp.getId() == ID.Tank){
-					camera.update(temp);
+					Tank player = (Tank)temp;
+					if(player.getPlayerID()==1)
+						camera.update(player);
 				}
 			}
 
