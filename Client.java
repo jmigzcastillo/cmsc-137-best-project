@@ -17,6 +17,7 @@ public class Client implements Runnable {
 	private static boolean closed = false;
 
 	public static Game game;
+	private String conversation = "";
 
 	public void run() {
 		// stops listening for response when "Sayonara" is recieved from Server
@@ -24,6 +25,9 @@ public class Client implements Runnable {
 		try {
 			while ((responseLine = inputStream.readLine()) != null) {
 				System.out.println(responseLine);
+
+				conversation = conversation.concat(responseLine + "\n");
+				game.display.chatArea.setText(conversation);
 
 				// i-print dun sa chatbox
 				if (responseLine == "*** Sayonara ***")
@@ -63,10 +67,10 @@ public class Client implements Runnable {
 				while (!closed) {
 					//read from the send box
 					outputStream.println(inputLine.readLine().trim());
-					String conversation = game.display.chatArea.getText();
-					System.out.println("Conversation:" + conversation);
-					conversation = conversation.concat(inputLine.readLine().trim());
-					game.display.chatArea.setText(conversation);
+					String mess = game.display.chatArea.getText();
+					// System.out.println("Conversation:" + conversation);
+					mess = mess.concat(inputLine.readLine().trim());
+					game.display.chatArea.setText(mess);
 					// outputStream.println(inputLine.readLine().trim());
 					// outputStream.println(<ilagay mo rito yung sasabihin>);
 				}
