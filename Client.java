@@ -43,8 +43,8 @@ public class Client implements Runnable {
 			int portNumber = Integer.valueOf(args[1]).intValue();
 
 			clientSocket = new Socket(host, portNumber);
-			String message = game.display.message;
-			InputStream stream = new ByteArrayInputStream(message.getBytes(StandardCharsets.UTF_8.name()));
+			String name = game.display.name;
+			InputStream stream = new ByteArrayInputStream(name.getBytes(StandardCharsets.UTF_8.name()));
 			inputLine = new BufferedReader(new InputStreamReader(stream));
 			outputStream = new PrintStream(clientSocket.getOutputStream());
 			inputStream = new DataInputStream(clientSocket.getInputStream());
@@ -62,9 +62,11 @@ public class Client implements Runnable {
 				new Thread(new Client()).start();
 				while (!closed) {
 					//read from the send box
-					InputStream stream =  outputStream.println(inputLine.readLine().trim());
+					outputStream.println(inputLine.readLine().trim());
 					String conversation = game.display.chatArea.getText();
+					System.out.println("Conversation:" + conversation);
 					conversation = conversation.concat(inputLine.readLine().trim());
+					game.display.chatArea.setText(conversation);
 					// outputStream.println(inputLine.readLine().trim());
 					// outputStream.println(<ilagay mo rito yung sasabihin>);
 				}

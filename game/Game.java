@@ -63,7 +63,7 @@ public class Game extends Canvas implements Runnable{
 	//player data
 	private int playerCount;
 
-	public Display display;
+	public static Display display;
 	
 	public Game(String title, int width, int height) {
 		this.title = title;
