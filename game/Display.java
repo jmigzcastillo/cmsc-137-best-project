@@ -44,10 +44,15 @@ public class Display{
 
 	public Display(int width, int height, String title, Game game){
 		JFrame frame = new JFrame(title);
+		JFrame instructionFrame = new JFrame("Instructions");
 
 		frame.setPreferredSize(new Dimension(width, height));
 		frame.setMinimumSize(new Dimension(width, height));
 		frame.setMaximumSize(new Dimension(width, height));
+
+		instructionFrame.setPreferredSize(new Dimension(width, height));
+		instructionFrame.setMinimumSize(new Dimension(width, height));
+		instructionFrame.setMaximumSize(new Dimension(width, height));
 
 		name = JOptionPane.showInputDialog(null, "Enter your name: ");
 
@@ -110,17 +115,21 @@ public class Display{
 		// initInstructions();
 
 		// cards.add(game, "Game");
-		cards.add(lobby, "Lobby");
+		// cards.add(lobby, "Lobby");
 		// cards.add(instructions, "Instructions");
 
 		cardHolder.add(cards);
-		frame.add(cardHolder);
+		instructionFrame.add(cardHolder);
 
 
 
 		// frame.add(lobby);
 
 		frame.add(game);
+
+		instructionFrame.setResizable(false);
+		instructionFrame.setLocationRelativeTo(null);
+		instructionFrame.setVisible(true);
 
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
