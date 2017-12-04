@@ -24,12 +24,12 @@ public class Tank extends MapObject{
 	private long buffDuration = 0;
 	private long buffEnd;
 
+
 	//point system and identification
 	private int playerID;
 	private String name;
 	private Boolean isDead;
-	private int score = 0;
-
+	private int playerLastHit = 0;
 	public Tank(int x, int y, int id, String name, MapObjectHandler handler){
 		super(x, y, ID.Tank);
 		this.playerID = id;
@@ -206,8 +206,9 @@ public class Tank extends MapObject{
 		return this.damage;
 	}
 
-	public void takeDamage(int damage){
+	public void takeDamage(int damage, int playerID){
 		this.hp -= damage;
+		this.playerLastHit = playerID;
 	}
 
 	public boolean isSAttack(){
@@ -219,9 +220,7 @@ public class Tank extends MapObject{
 		return this.playerID;
 	}
 
-	public int getScore(){
-		return this.score;
-	}
+
 
 	public String getName(){
 		return this.name;
@@ -229,6 +228,10 @@ public class Tank extends MapObject{
 
 	public Boolean getIsDead(){
 		return this.isDead;
+	}
+	
+	public int getLastHit(){
+		return this.playerLastHit;
 	}
 
 	public MapObjectHandler getHandler(){

@@ -21,6 +21,8 @@ import java.io.IOException;
 //import randomizer
 import java.util.Random;
 
+import java.util.Hashtable;
+
 //import map objects
 import mapobject.*;
 
@@ -68,6 +70,7 @@ public class Game extends Canvas implements Runnable{
 
 	//player data
 	private int playerCount;
+	private Hashtable<Integer, Integer> scoreBoard;
 	
 	public Game(String title, int width, int height) {
 		this.title = title;
@@ -90,8 +93,11 @@ public class Game extends Canvas implements Runnable{
 		//spawn player
 		Tank player1 = playerSpawn(1, "Weaboo");
 		Tank player2 = playerSpawn(2, "Normie");
-
-		
+		playerCount = 2;
+		//initialize scoreBoard
+		scoreBoard = new Hashtable<Integer, Integer>(playerCount);
+		scoreBoard.put(1, 0);
+		scoreBoard.put(2, 0);
 		//initialize camera
 		camera = new Camera(player1.getX(), player1.getY());
 
@@ -210,6 +216,24 @@ public class Game extends Canvas implements Runnable{
 		
 	}
 
+	private void printScoreboard(){
+		System.out.println("Scores:");
+		for(int i = 1; i<=playerCount; i++){
+			
+			System.out.println("Player "+ i + ": " + scoreBoard.get(i));
+		}
+	}
+
+	private int checkGameEnd(){
+		for(int i = 1; i<=playerCount; i++){
+			
+			if(scoreBoard.get(i) == 20){
+				return i;
+			}
+		}
+		return 0;
+	}
+
 
 
 
@@ -306,8 +330,12 @@ public class Game extends Canvas implements Runnable{
 	}
 
 	public void update(){
-		playerCount = handler.getMapObjectCount();
 		if(currentState == State.GAME){
+			int check = checkGameEnd();
+			if(check!=0){
+				System.out.println("Game done woohoo");
+				System.out.println("Winner is: Player#"+ check );
+			}
 			for(int i=0; i<handler.getMapObjectCount(); i++){
 				MapObject temp = handler.getMapObject(i);
 				if (temp.getId() == ID.Tank){
@@ -315,6 +343,10 @@ public class Game extends Canvas implements Runnable{
 					if(player.getPlayerID()==1)
 						camera.update(player);
 					if(player.getIsDead()) {
+						int killer = player.getLastHit();
+						scoreBoard.replace(killer, scoreBoard.get(killer)+2);
+
+						printScoreboard();
 						player.setIsDead(false);
 						player.setHp(20);
 						//respawn

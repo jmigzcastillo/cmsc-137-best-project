@@ -67,7 +67,7 @@ public class Bullet extends MapObject{
 				else if(temp.getId() == ID.Tank){
 					Tank player = (Tank) temp;
 					if (player.getPlayerID()!=playerID){
-						player.takeDamage(this.damage);
+						player.takeDamage(this.damage, playerID);
 						handler.removeMapObject(this);
 					}
 				}
