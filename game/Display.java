@@ -16,6 +16,10 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.*;
+import java.awt.*;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 
 public class Display{
 
@@ -35,7 +39,9 @@ public class Display{
 
 	public String name = "";
 	public String message = "";
-	
+
+	public BufferedImage bg;
+
 	public Display(int width, int height, String title, Game game){
 		JFrame frame = new JFrame(title);
 
@@ -83,22 +89,36 @@ public class Display{
 
 
 		cards = new JPanel(new CardLayout());
-		cardHolder = new JPanel();
+
+		try {
+			bg = ImageIO.read(ImageLoader.class.getResource("../sprites/instructions.jpg"));
+		} catch (Exception e) {}
+		// Image scaledImage = originalImage.getScaledInstance(jPanel.getWidth(),jPanel.getHeight(),Image.SCALE_SMOOTH);
+		Image bgbg = bg.getScaledInstance(800, 560, Image.SCALE_SMOOTH);
+		cardHolder = new JPanel(){
+			@Override
+			protected void paintComponent(Graphics g) {
+
+				super.paintComponent(g);
+					g.drawImage(bgbg, 0, 0, null);
+			}
+		};
 		cardHolder.setSize(800, 600);
+		cardHolder.setBackground(Color.RED);
 
 		initLobby();
-		initInstructions();
+		// initInstructions();
 
 		// cards.add(game, "Game");
 		cards.add(lobby, "Lobby");
-		cards.add(instructions, "Instructions");
+		// cards.add(instructions, "Instructions");
 
 		cardHolder.add(cards);
 		frame.add(cardHolder);
 
 
 
-
+		// frame.add(lobby);
 
 		frame.add(game);
 
@@ -110,16 +130,18 @@ public class Display{
 
 	void initLobby() {
 		lobby = new JPanel();
+		// lobby.setBackground(Color.YELLOW);
+		// lobby.setSize(800, 600);
 		lobby.setLayout(new BoxLayout(lobby, BoxLayout.Y_AXIS));
 		playButton = new JButton("Play");
-		playButton.setPreferredSize(new Dimension(300, 30));
+		// playButton.setPreferredSize(new Dimension(300, 30));
 		playButton.setBackground(Color.GREEN);
 		playButton.setForeground(Color.WHITE);		
-		instructionsButton = new JButton("Instructions");
-		instructionsButton.setPreferredSize(new Dimension(300, 30));
-		instructionsButton.setBackground(Color.BLUE);
-		instructionsButton.setForeground(Color.WHITE);	
-		// lobby.add(Box.createVerticalGlue());
+		// instructionsButton = new JButton("Instructions");
+		// instructionsButton.setPreferredSize(new Dimension(300, 30));
+		// instructionsButton.setBackground(Color.BLUE);
+		// instructionsButton.setForeground(Color.WHITE);	
+		lobby.add(Box.createVerticalGlue());
 		lobby.add(playButton);
 		playButton.addActionListener(new ActionListener(){
 			@Override
@@ -127,29 +149,31 @@ public class Display{
 				CardLayout cardLayout = (CardLayout)(cards.getLayout());
 				// cardLayout.show(cards, "Game");
 				cardHolder.setVisible(false);
+				// lobby.setVisible(false);
 			}
 		});
-		lobby.add(instructionsButton);
-		instructionsButton.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				CardLayout cardLayout = (CardLayout)(cards.getLayout());
-				cardLayout.show(cards, "Instructions");
-			}
-		});
+		// lobby.add(instructionsButton);
+		// instructionsButton.addActionListener(new ActionListener(){
+		// 	@Override
+		// 	public void actionPerformed(ActionEvent arg0) {
+		// 		CardLayout cardLayout = (CardLayout)(cards.getLayout());
+		// 		cardLayout.show(cards, "Instructions");
+		// 	}
+		// });
 		// lobby.add(Box.createVerticalGlue());
 	}
 
-	void initInstructions() {
-		instructions = new JPanel();
-		mainMenuButton = new JButton("Go back to Main Menu");
-		instructions.add(mainMenuButton);
-		mainMenuButton.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				CardLayout cardLayout = (CardLayout)(cards.getLayout());
-				cardLayout.show(cards, "Lobby");
-			}
-		});
-	}
+	// void initInstructions() {
+	// 	instructions = new JPanel();
+	// 	instructions.setBackground(Color.YELLOW);
+	// 	mainMenuButton = new JButton("Go back to Main Menu");
+	// 	instructions.add(mainMenuButton);
+	// 	mainMenuButton.addActionListener(new ActionListener(){
+	// 		@Override
+	// 		public void actionPerformed(ActionEvent arg0) {
+	// 			CardLayout cardLayout = (CardLayout)(cards.getLayout());
+	// 			cardLayout.show(cards, "Lobby");
+	// 		}
+	// 	});
+	// }
 }
