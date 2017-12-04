@@ -180,20 +180,29 @@ public class Game extends Canvas implements Runnable{
 	public Tank playerSpawn(int playerID, String name){
 		int x = randomizer.nextInt(mapSize-1);
 		int y = randomizer.nextInt(mapSize-1);
+		
 		Rectangle bound = new Rectangle((x*MapObject.BLOCK_SIZE)+200, y*MapObject.BLOCK_SIZE, MapObject.BLOCK_SIZE,MapObject.BLOCK_SIZE);
 		System.out.println("Spawning player " + playerID + ": " + name);
 		while(true){
+			int count=0;
 			for(int i=0; i<handler.getMapObjectCount(); i++){
 				MapObject temp = handler.getMapObject(i);
-				
-				//create player if coordinates does not collide with map object
-				if(!temp.getBounds().intersects(bound)){
-					System.out.println("Player " + name + " spawned at" + x + "," + y);
-					Tank player = new Tank((x*MapObject.BLOCK_SIZE)+200, y*MapObject.BLOCK_SIZE, playerID, name, handler);
-					handler.addMapObject(player);
-					return player;
-				}
+
+				//check each map object, if it collides, break
+				if(temp.getBounds().intersects(bound) || temp.getBounds().equals(bound) ||temp.getBounds().contains(bound)){
+					break;
+				} 
+				count++;
 			}
+			System.out.println("Checked " + count+ " of " + handler.getMapObjectCount());
+			//if all objects have been checked, no object collides with tank
+			if(count==handler.getMapObjectCount()){
+				System.out.println("Player " + name + " spawned at" + x + "," + y);
+				Tank player = new Tank((x*MapObject.BLOCK_SIZE)+200, y*MapObject.BLOCK_SIZE, playerID, name, handler);
+				handler.addMapObject(player);
+				return player;
+			}
+
 			x = randomizer.nextInt(mapSize-1);
 			y = randomizer.nextInt(mapSize-1);
 			bound = new Rectangle((x*MapObject.BLOCK_SIZE)+200, y*MapObject.BLOCK_SIZE, MapObject.BLOCK_SIZE,MapObject.BLOCK_SIZE);
