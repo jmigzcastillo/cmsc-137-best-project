@@ -84,7 +84,7 @@ public class Game extends Canvas implements Runnable{
 		handler = new MapObjectHandler();
 
 		//add objects to handler by initializing map
-		mapID = 2;
+		mapID = 1;
 		mapInitialize(mapID);
 
 		//spawn player
@@ -306,6 +306,13 @@ public class Game extends Canvas implements Runnable{
 					Tank player = (Tank)temp;
 					if(player.getPlayerID()==1)
 						camera.update(player);
+					if(player.getIsDead()) {
+						player.setIsDead(false);
+						player.setHp(20);
+						//respawn
+						player.getHandler().removeMapObject(player);
+						player = playerSpawn(player.getPlayerID(), player.getName());
+					}
 				}
 			}
 

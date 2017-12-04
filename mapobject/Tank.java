@@ -27,6 +27,7 @@ public class Tank extends MapObject{
 	//point system and identification
 	private int playerID;
 	private String name;
+	private Boolean isDead;
 	private int score = 0;
 
 	public Tank(int x, int y, int id, String name, MapObjectHandler handler){
@@ -36,11 +37,15 @@ public class Tank extends MapObject{
 		this.velX = movementSpeed;
 		this.velY = movementSpeed;
 		this.handler = handler;
+		this.isDead = false;
 	}
 
 	public void update(){
 		//check if dead
-		if(this.hp<=0) handler.removeMapObject(this);
+		// if(this.hp<=0) handler.removeMapObject(this);
+		if(this.hp<=0) {
+			this.isDead = true;
+		}
 
 		//movement
 		x+=velX;
@@ -216,6 +221,26 @@ public class Tank extends MapObject{
 
 	public int getScore(){
 		return this.score;
+	}
+
+	public String getName(){
+		return this.name;
+	}
+
+	public Boolean getIsDead(){
+		return this.isDead;
+	}
+
+	public MapObjectHandler getHandler(){
+		return this.handler;
+	}
+
+	public void setIsDead(Boolean isDead){
+		this.isDead = isDead;
+	}
+
+	public void setHp(int hp){
+		this.hp = hp;
 	}
 }
 
