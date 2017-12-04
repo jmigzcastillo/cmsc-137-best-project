@@ -252,7 +252,6 @@ public class GameServer implements Runnable{
 
 	public void run(){
 		//update 60 times per second
-		this.requestFocus();
 		long lastTime = System.nanoTime();
 		double amountOfTicks = 60.0;
 		double ns = 1000000000 / amountOfTicks;
