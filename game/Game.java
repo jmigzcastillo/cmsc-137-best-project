@@ -194,7 +194,6 @@ public class Game extends Canvas implements Runnable{
 				} 
 				count++;
 			}
-			System.out.println("Checked " + count+ " of " + handler.getMapObjectCount());
 			//if all objects have been checked, no object collides with tank
 			if(count==handler.getMapObjectCount()){
 				System.out.println("Player " + name + " spawned at" + x + "," + y);
