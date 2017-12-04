@@ -15,6 +15,7 @@ import java.awt.FlowLayout;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class Display{
 
@@ -29,11 +30,12 @@ public class Display{
 	private JButton mainMenuButton;
 
 	private JScrollPane scrollPane;
-	private JTextField textField;
-	private JTextArea chatArea;
+	public JTextField textField;
+	public JTextArea chatArea;
 
-	public String name;
-
+	public String name = "";
+	public String message = "";
+	
 	public Display(int width, int height, String title, Game game){
 		JFrame frame = new JFrame(title);
 
@@ -50,6 +52,21 @@ public class Display{
 
 		textField = new JTextField(20);
 		textField.setPreferredSize(new Dimension(20, 200));
+		textField.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent e) {
+			}
+
+			public void keyTyped(KeyEvent e) {
+			}
+
+			public void keyPressed(KeyEvent evt) {
+				if(evt.getKeyCode() == KeyEvent.VK_ENTER && !textField.getText().equals('\n')) { // empty string 
+					message = textField.getText();
+					// System.out.println(message);
+					textField.setText("");
+				}
+			}
+		});
 		chatArea = new JTextArea(30,4);
 		chatArea.setPreferredSize(new Dimension(200, 520));
 		chatArea.setBackground(Color.BLACK);
