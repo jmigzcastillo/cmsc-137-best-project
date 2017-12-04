@@ -26,14 +26,7 @@ public class PlayerControls implements KeyListener{
 		if(key == KeyEvent.VK_S) tank.setDown(true);
 		if(key == KeyEvent.VK_A) tank.setLeft(true);
 		if(key == KeyEvent.VK_D) tank.setRight(true);
-		// for(int i=0; i<handler.getMapObjectCount(); i++){
-		// 	if(handler.getMapObject(i).getID() == ID.Player){
-		// 		if(key == keyEvent.VK_W) handler.setUp(true);
-		// 		if(key == keyEvent.VK_S) handler.setDown(true);
-		// 		if(key == keyEvent.VK_A) handler.setLeft(true);
-		// 		if(key == keyEvent.VK_D) handler.setRight(true);
-		// 	}
-		// }
+
 	}
 
 	public void keyReleased(KeyEvent ke){
@@ -42,14 +35,7 @@ public class PlayerControls implements KeyListener{
 		if(key == KeyEvent.VK_S) tank.setDown(false);
 		if(key == KeyEvent.VK_A) tank.setLeft(false);
 		if(key == KeyEvent.VK_D) tank.setRight(false);
-		// for(int i=0; i<handler.getMapObjectCount(); i++){
-		// 	if(handler.getMapObject(i).getID() == ID.Player){
-		// 		if(key == keyEvent.VK_W) handler.setUp(false);
-		// 		if(key == keyEvent.VK_S) handler.setDown(false);
-		// 		if(key == keyEvent.VK_A) handler.setLeft(false);
-		// 		if(key == keyEvent.VK_D) handler.setRight(false);
-		// 	}
-		// }
+
 	}
 
 	public void keyTyped(KeyEvent ke){}
