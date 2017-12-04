@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Color;
 
+import game.ImageLoader;
 
 
 public class Block extends MapObject{
@@ -17,8 +18,9 @@ public class Block extends MapObject{
 
 
 	public void render(Graphics g){
-		g.setColor(Color.GRAY);
-		g.fillRect(x, y, BLOCK_SIZE, BLOCK_SIZE);
+		// g.setColor(Color.GRAY);
+		// g.fillRect(x, y, BLOCK_SIZE, BLOCK_SIZE);
+		g.drawImage(ImageLoader.wall, x, y, BLOCK_SIZE,BLOCK_SIZE, null, null);
 	}
 	public void update(){}
 
