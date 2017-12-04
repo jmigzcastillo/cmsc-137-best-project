@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.nio.charset.StandardCharsets;
+
 public class Client implements Runnable {
 
 	private static Socket clientSocket = null;
@@ -14,12 +16,15 @@ public class Client implements Runnable {
 	private static BufferedReader inputLine = null;
 	private static boolean closed = false;
 
+	public static Game game;
+
 	public void run() {
 		// stops listening for response when "Sayonara" is recieved from Server
 		String responseLine;
 		try {
 			while ((responseLine = inputStream.readLine()) != null) {
 				System.out.println(responseLine);
+
 				// i-print dun sa chatbox
 				if (responseLine == "*** Sayonara ***")
 					break;
@@ -31,14 +36,16 @@ public class Client implements Runnable {
 	}
 
 	public static void main(String[] args) {
-		new Game("What the tank?!", 800, 600);
-
+		game = new Game("What the tank?!", 800, 600);
+		
 		try {
 			String host = args[0];
 			int portNumber = Integer.valueOf(args[1]).intValue();
 
 			clientSocket = new Socket(host, portNumber);
-			inputLine = new BufferedReader(new InputStreamReader(System.in));
+			String message = game.display.message;
+			InputStream stream = new ByteArrayInputStream(message.getBytes(StandardCharsets.UTF_8.name()));
+			inputLine = new BufferedReader(new InputStreamReader(stream));
 			outputStream = new PrintStream(clientSocket.getOutputStream());
 			inputStream = new DataInputStream(clientSocket.getInputStream());
 		} catch (UnknownHostException e) {
@@ -55,7 +62,9 @@ public class Client implements Runnable {
 				new Thread(new Client()).start();
 				while (!closed) {
 					//read from the send box
-					outputStream.println(inputLine.readLine().trim());
+					InputStream stream =  outputStream.println(inputLine.readLine().trim());
+					String conversation = game.display.chatArea.getText();
+					conversation = conversation.concat(inputLine.readLine().trim());
 					// outputStream.println(inputLine.readLine().trim());
 					// outputStream.println(<ilagay mo rito yung sasabihin>);
 				}
